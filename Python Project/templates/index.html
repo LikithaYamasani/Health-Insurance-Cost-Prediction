@@ -10,24 +10,46 @@
   
 </head>
 
-<body>
+<body style="background-color:rgba(127, 206, 255, 0.659);>
  <div class="login">
-	<h1>Health Insurance Cost Prediction</h1>
+	<center><h1>Health Insurance Cost Prediction</h1></center>
+  <img align="right" src="https://roundtmc.com/wp-content/uploads/2017/09/health-insurance.jpg" alt="Health insurance" width="400" height="400">
+   
+    <!-- <form action="{{url_for('predict')}}" method="post">
+    	Age : <input type="text" name="age" placeholder="Age (in years)" required="required" /><br><br>
+        BMI : <input type="text" name="bmi" placeholder="BMI" required="required" /><br><br>
+	No. of children : <input type="text" name="children" placeholder="Number of children" required="required" /><br><br>
+	Sex : <input type="text" name="sex" placeholder="Sex (male or female)" required="required" /><br><br>
+	Smoker (Y/N) : <input type="text" name="smoker" placeholder="Smoker (yes or no)" required="required" /><br><br>
 
-    
-    <form action="{{ url_for('predict')}}" method="post">
-    	<input type="text" name="age" placeholder="Age (in years)" required="required" />
-        <input type="text" name="bmi" placeholder="BMI" required="required" />
-	<input type="text" name="children" placeholder="Number of children" required="required" />
-	<input type="text" name="sex" placeholder="Sex (male or female)" required="required" />
-	<input type="text" name="smoker" placeholder="Smoker (yes or no)" required="required" />
+        <button type="submit" name="predict" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form> -->
 
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    <form action="{{url_for('predict')}}" method="post" >
+      <table align="center">
+      <tr>
+    	<td><label for="age"><b> Age : </b></label></td><td> <input type="text" name="age" placeholder="Age (in years)" required="required" /></td>
+      </tr>
+      <br><br>
+      <tr>
+        <td><label for="bmi"><b>BMI : </b></label></td> <td> <input type="text" name="bmi" placeholder="BMI" required="required" /></td>
+      </tr>
+	    <tr>
+        <td><label for="children"><b> No. of children : </b></label></td> <td><input type="text" name="children" placeholder="Number of children" required="required" /></td>
+      </tr>
+      <tr>
+        <td><label for="sex"><b> Sex : </b></label></td> <td> <input type="text" name="sex" placeholder="Sex (male or female)" required="required" /></td>
+      </tr>
+      <tr>
+        <td><label for="smoker"><b> Smoker (Y/N) : </b></label></td> <td><input type="text" name="smoker" placeholder="Smoker (yes or no)" required="required" /></td>
+      </tr>
+      </table>
+      <br><br>
+        <center><button type="submit" name="predict" class="btn btn-primary btn-block btn-large">Predict</button></center>
     </form>
-
    <br>
    <br>
-   {{ prediction_text }}
+  <center> {{ prediction_text }}</center>
 
  </div>
 
