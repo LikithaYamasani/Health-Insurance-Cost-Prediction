@@ -19,6 +19,8 @@ dataset = backend.fetch_customer_data()
 def plot_graphs():
     plot_mean_charges_by_sex_and_smoker()
     age_distribution_by_sex()
+    plot_mean_charges_by_region_and_smoker()
+    plot_mean_charges_by_region_and_customer()
     
 def plot_mean_charges_by_sex_and_smoker():
     dataset = backend.fetch_charges_smoker_sex_data()
@@ -36,8 +38,21 @@ def age_distribution_by_sex():
     plt.title('Age Distribution by Sex')
     plt.show()
     
+def plot_mean_charges_by_region_and_smoker():
+    dataset = backend.fetch_smokers_region_data()
+    plt.pie(dataset['Number_of_Smokers'], labels = dataset['Region'], autopct='%.0f%%')
+    plt.title('Count of Smokers per Region')
+    plt.show()
+    
+def plot_mean_charges_by_region_and_customer():
+    dataset = backend.fetch_customers_region_data()
+    sns.barplot(dataset['Region'],dataset['Number_of_Customers'])
+    plt.ylabel('Count')
+    plt.title('Count of Customers per Region')
+    plt.show()
+    
 
-plot_graphs()  
+plot_graphs() 
 
 ### One Hot Encoding the dataset
 def one_hot_encoding_data(dataset):
