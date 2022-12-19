@@ -15,12 +15,18 @@ import pickle
 backend.setup_database()
 dataset = backend.fetch_customer_data()
 
-### Data visualizations
 def plot_graphs():
     plot_mean_charges_by_sex_and_smoker()
     age_distribution_by_sex()
     plot_mean_charges_by_region_and_smoker()
     plot_mean_charges_by_region_and_customer()
+    plot_age_count_graph()
+    plot_age_smoker_graph()
+    plot_age_count_density_graph()
+    plot_age_charges_graph()
+    plot_region_charges_data()
+    plot_bmi_sex_graph()
+    plot_correlation_graph()
     
 def plot_mean_charges_by_sex_and_smoker():
     dataset = backend.fetch_charges_smoker_sex_data()
@@ -51,8 +57,57 @@ def plot_mean_charges_by_region_and_customer():
     plt.title('Count of Customers per Region')
     plt.show()
     
+def plot_age_count_graph():
+    dataset = backend.fetch_age_count_data()
+    sns.barplot(dataset['Age_Range'],dataset['Number_of_Customers'])
+    plt.title('Count of Customers per Age Group')
+    plt.xlabel('Age Group')
+    plt.show()
+    
+def plot_age_smoker_graph():
+    dataset = backend.fetch_age_and_smoker_data()
+    plt.pie(dataset['Number_of_Customers'], labels = dataset['Age_Range'], autopct='%.0f%%')
+    plt.title('Count of Smokers per Age Group')
+    plt.show()
+    
+def plot_age_count_density_graph():
+    dataset = backend.fetch_age_data()
+    sns.distplot(dataset['Age'], color='green')
+    plt.title('Count of Customers per Age Group')
+    plt.xlabel('Age Group')
+    plt.show()    
 
-plot_graphs() 
+def plot_age_charges_graph():
+    dataset = backend.fetch_age_charges_data()
+    sns.barplot(dataset['Age_Range'],dataset['Mean_Charges'])
+    plt.ylabel('Average')
+    plt.title('Average Charges per Age Group')
+    plt.show()
+    
+def plot_region_charges_data():
+    dataset = backend.fetch_region_charges_data()
+    sns.barplot(dataset['Region'],dataset['Mean_Charges'])
+    plt.ylabel('Average')
+    plt.title('Average Charges per Region')
+    plt.show()
+    
+def plot_bmi_sex_graph():
+    dataset = backend.fetch_bmi_sex_data()
+    sns.kdeplot(dataset['BMI'][dataset['Sex'] == 'male'], label = 'Male')
+    sns.kdeplot(dataset['BMI'][dataset['Sex'] == 'female'], label = 'Female')
+    plt.xlabel('Bmi')
+    plt.legend()
+    plt.title('Bmi Distribution by Sex')
+    plt.show()
+
+def plot_correlation_graph():
+    dataset = backend.fetch_correlation_data()
+    plt.figure(figsize=(15,7))
+    sns.heatmap(dataset.corr(), annot=True)
+    plt.title('Correlation Plot')
+    plt.show()
+    
+plot_graphs()  
 
 ### One Hot Encoding the dataset
 def one_hot_encoding_data(dataset):
