@@ -265,3 +265,97 @@ def fetch_customers_region_data():
                                                  order by count(ct.CustomerID)""", normalized_connection)
     normalized_connection.close()
     return customers_region_data
+
+def fetch_age_count_data():
+    normalized_connection = create_connection('normalized.db', False)
+    age_count_data = pd.read_sql_query("""select 
+                                                 case
+                                                WHEN Age BETWEEN 18 AND 30 THEN '18-30'
+                                                WHEN Age BETWEEN 31 AND 40 THEN '31-40'
+                                                WHEN Age BETWEEN 41 AND 50 THEN '41-50'
+                                                WHEN Age BETWEEN 51 AND 60 THEN '51-60'
+                                                WHEN Age BETWEEN 61 AND 70 THEN '61-70'
+                                                end as Age_Range, 
+                                                 count(*) Number_of_Customers
+                                                 from Customer
+                                                 group by Age_Range 
+                                                 """, normalized_connection)
+    normalized_connection.close()
+    return age_count_data
+
+def fetch_age_and_smoker_data():
+    normalized_connection = create_connection('normalized.db', False)
+    age_and_smoker_data = pd.read_sql_query("""select 
+                                                 case
+                                                WHEN Age BETWEEN 18 AND 30 THEN '18-30'
+                                                WHEN Age BETWEEN 31 AND 40 THEN '31-40'
+                                                WHEN Age BETWEEN 41 AND 50 THEN '41-50'
+                                                WHEN Age BETWEEN 51 AND 60 THEN '51-60'
+                                                WHEN Age BETWEEN 61 AND 70 THEN '61-70'
+                                                end as Age_Range, 
+                                                 count(*) Number_of_Customers
+                                                 from Customer
+                                                 where Smoker = 'yes'
+                                                 group by Age_Range 
+                                                 """, normalized_connection)
+    normalized_connection.close()
+    return age_and_smoker_data
+
+def fetch_age_data():
+    normalized_connection = create_connection('normalized.db', False)
+    age_data = pd.read_sql_query("""select 
+                                        Age
+                                        from Customer
+                                                 
+                                        """, normalized_connection)
+    normalized_connection.close()
+    return age_data
+
+def fetch_age_charges_data():
+    normalized_connection = create_connection('normalized.db', False)
+    age_charges_data = pd.read_sql_query("""select 
+                                                 case
+                                                WHEN Age BETWEEN 18 AND 30 THEN '18-30'
+                                                WHEN Age BETWEEN 31 AND 40 THEN '31-40'
+                                                WHEN Age BETWEEN 41 AND 50 THEN '41-50'
+                                                WHEN Age BETWEEN 51 AND 60 THEN '51-60'
+                                                WHEN Age BETWEEN 61 AND 70 THEN '61-70'
+                                                end as Age_Range, 
+                                                 avg(Charges) Mean_Charges
+                                                 from Customer
+                                                 group by Age_Range 
+                                                 """, normalized_connection)
+    normalized_connection.close()
+    return age_charges_data
+
+def fetch_region_charges_data():
+    normalized_connection = create_connection('normalized.db', False)
+    region_charges_data = pd.read_sql_query("""select 
+                                               Rg.Region, 
+                                               avg(ct.Charges) Mean_Charges
+                                               from Customer ct 
+                                               join Region Rg
+                                               on ct.RegionId = Rg.RegionId
+                                               group by Rg.Region
+                                                
+                                                 """, normalized_connection)
+    normalized_connection.close()
+    return region_charges_data
+
+def fetch_bmi_sex_data():
+    normalized_connection = create_connection('normalized.db', False)
+    bmi_sex_data = pd.read_sql_query("""select 
+                                        bmi,sex 
+                                        from customer
+                                                 """, normalized_connection)
+    normalized_connection.close()
+    return bmi_sex_data
+
+def fetch_correlation_data():
+    normalized_connection = create_connection('normalized.db', False)
+    correlation_data = pd.read_sql_query("""select 
+                                        age,bmi,children,charges 
+                                        from customer
+                                                 """, normalized_connection)
+    normalized_connection.close()
+    return correlation_data
